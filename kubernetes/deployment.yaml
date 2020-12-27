@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: saas-provider
+  name: saas-provider-frontend-deployment
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: saas-provider-frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: saas-provider-frontend
+    spec:
+      containers:
+      - name: saas-provider-frontend
+        image: 427398298435.dkr.ecr.us-east-2.amazonaws.com/saas-provider-dot-cloud:latest
+        ports:
+          - containerPort: 80
