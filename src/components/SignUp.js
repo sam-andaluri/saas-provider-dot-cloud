@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {useAuth0} from "@auth0/auth0-react";
+import {useLocation} from "react-router-dom";
 
 function Copyright() {
     return (
@@ -48,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
+    const { user } = useAuth0();
+    const { name, email } = user;
+    const fname = name.split(" ")[0];
+    const lname = name.split(" ")[1];
+    const tier = new URLSearchParams(useLocation().search).get("tier")
 
     return (
         <Container component="main" maxWidth="xs">
@@ -70,7 +77,8 @@ export default function SignUp() {
                                 fullWidth
                                 id="firstName"
                                 label="First Name"
-                                autoFocus
+                                value={fname}
+                                disabled={true}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -82,6 +90,8 @@ export default function SignUp() {
                                 label="Last Name"
                                 name="lastName"
                                 autoComplete="lname"
+                                value = {lname}
+                                disabled={true}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -93,6 +103,8 @@ export default function SignUp() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                value = {email}
+                                disabled={true}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -100,11 +112,12 @@ export default function SignUp() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                                name="tier"
+                                label="Tier"
+                                type="text"
+                                value={tier}
+                                id="tier"
+                                disabled={true}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -123,13 +136,6 @@ export default function SignUp() {
                     >
                         Sign Up
                     </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
             </div>
             <Box mt={5}>
