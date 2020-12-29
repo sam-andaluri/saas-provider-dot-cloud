@@ -6,9 +6,15 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/sam-andaluri/saas-provider-dot-cloud.git
+    repoURL: https://github.com/sam-andaluri/saas-tenant-dot-cloud.git
     targetRevision: HEAD
-    path: kubernetes/tenants
+    path: kubernetes
   destination:
     server: https://kubernetes.default.svc
     namespace: saas-tenant-1
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
