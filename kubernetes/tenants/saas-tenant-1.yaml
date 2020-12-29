@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: saas-tenant-1
+  namespace: saas-tenant-1
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sam-andaluri/saas-provider-dot-cloud.git
+    targetRevision: HEAD
+    path: kubernetes/tenants
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: saas-tenant-1
