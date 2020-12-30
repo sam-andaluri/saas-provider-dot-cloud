@@ -17,5 +17,23 @@ spec:
       containers:
       - name: saas-provider-frontend
         image: 427398298435.dkr.ecr.us-east-2.amazonaws.com/saas-provider-dot-cloud:latest
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "1000m"
+          limits:
+            memory: "1024Mi"
+            cpu: "2000m"
+        env:
+        - name: REACT_APP_AUTH0_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: provider
+              key: REACT_APP_AUTH0_DOMAIN
+        - name: REACT_APP_AUTH0_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: provider
+              key: REACT_APP_AUTH0_CLIENT_ID
         ports:
           - containerPort: 80

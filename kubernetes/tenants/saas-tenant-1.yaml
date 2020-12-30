@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/sam-andaluri/saas-tenant-dot-cloud.git
     targetRevision: HEAD
-    path: kubernetes
+    path: kubernetes/tenants/tenant1
   destination:
     server: https://kubernetes.default.svc
     namespace: saas-tenant-1
