@@ -1,77 +1,25 @@
-# Getting Started with Create React App
+# Saas Provider and Tenant Onboarding
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This is an example SaaS provider application. SaaS Provider UI shows different tiers of service that users can purchase. Once a subscription is made, the tenant application would be available at tenant1.saas-tenant.cloud. This example application demonstrates a self-onboarding experience on sign up. The resources are all created in a custom namespace in a EKS cluster.
 
-In the project directory, you can run:
+## CI/CD and GitOps flow
 
-### `yarn start`
+### Trigger : When a change is made to repo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. CodePipeline triggers a CodeBuild to build a docker image of the UI.
+2. Github action triggers and applies kubernetes manifests to the EKS cluster.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Trigger : When a new tenant signs up
 
-### `yarn test`
+0. All tenants share same deployment and service specs. Based on tenant's tier e.g. free, pro or enterprise, a kustomization is applied on the base specs to set specific resources. 
+1. Front-end makes an API call to an API end point to create a tenant.
+2. API server uses Github API to make a copy of a templated repo as described above.
+3. API server copies the base deployment and service specs.
+4. API server generates an ArgoCD Application spec.
+5. API server generates a Github action and adds all the above files to repo, commits the change.
+6. Github action starts on push, applies ArgoCD application
+7. ArgoCD takes kustomized tiered specs and syncs them to Cluster.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-### Local build and test notes
-
-```bash
-docker build -f Dockerfile -t saas-provider-dot-cloud:latest .
-docker run -it -p 1234:80 --rm saas-provider-dot-cloud:latest
-```
