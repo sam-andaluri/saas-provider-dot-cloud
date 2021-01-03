@@ -5,7 +5,7 @@ rm -rf ./env-config.js
 touch ./env-config.js
 
 # Add assignment 
-echo "{" >> ./env-config.js
+echo "window._env_ = {" >> ./env-config.js
 for var in `env`; do
     echo $var | awk -F'=' '{ print "\"" $1 "\"" ":" "\"" $2 "\"" "," }' >> ./env-config.js
 done
