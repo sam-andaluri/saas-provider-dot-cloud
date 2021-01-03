@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is an example SaaS provider application. SaaS Provider UI shows different tiers of service that users can purchase. Once a subscription is made, the tenant application would be available at tenant1.saas-tenant.cloud. This example application demonstrates a self-onboarding experience on sign up. The resources are all created in a custom namespace in a EKS cluster.
+This is an example SaaS provider application. SaaS Provider UI shows different tiers of service that users can purchase. Once a subscription is made, the tenant application would be available at tenant1.saas-tenant.cloud. This example application demonstrates a self-onboarding experience on sign up. The resources are all created in a custom namespace for each tenant in a EKS cluster.
 
 ## CI/CD and GitOps flow
 
@@ -21,5 +21,3 @@ This is an example SaaS provider application. SaaS Provider UI shows different t
 5. API server generates a Github action and adds all the above files to repo, commits the change.
 6. Github action starts on push, applies ArgoCD application
 7. ArgoCD takes kustomized tiered specs and syncs them to Cluster.
-
-
