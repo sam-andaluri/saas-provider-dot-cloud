@@ -12,8 +12,6 @@ FROM nginx:1.19.5-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
-COPY env.sh /app
-RUN chmod +x /app/env.sh
 EXPOSE 80
 ENTRYPOINT [ "/app/env.sh" ]
 CMD ["nginx", "-g", "daemon off;"]
