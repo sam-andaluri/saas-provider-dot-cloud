@@ -24,4 +24,8 @@ jobs:
           cluster_name: $EKS_CLUSTER_NAME
         with:
           args: |
-            kubectl apply -f kubernetes
+            kubectl apply -f kubernetes/namespace.yaml
+            kubectl apply -f kubernetes/provider-sealed-secrets.yaml
+            kubectl apply -f kubernetes/deployment.yaml
+            kubectl apply -f kubernetes/service.yaml
+
