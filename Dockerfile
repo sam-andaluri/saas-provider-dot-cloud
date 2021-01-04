@@ -14,6 +14,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
 EXPOSE 80
 COPY docker-entrypoint.sh /
-RUN chmod +x docker-entrypoint.sh 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+RUN chmod +x /docker-entrypoint.sh 
+ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]
+
 

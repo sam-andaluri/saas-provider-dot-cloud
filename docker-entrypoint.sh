@@ -1,12 +1,8 @@
 #!/bin/bash
-set -e
-
-# Recreate config file
-rm -rf /usr/share/nginx/html/config.js
-touch /usr/share/nginx/html/config.js
+set -eu
 
 # Add assignment 
-echo "window._env_ = {" >> /usr/share/nginx/html/config.js
+echo "window._env_ = {" > /usr/share/nginx/html/config.js
 for var in `env`; do
     echo $var | awk -F'=' '{ print "\"" $1 "\"" ":" "\"" $2 "\"" "," }' >> /usr/share/nginx/html/config.js
 done
