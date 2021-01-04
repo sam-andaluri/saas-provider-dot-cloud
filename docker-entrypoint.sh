@@ -2,15 +2,15 @@
 set -e
 
 # Recreate config file
-rm -rf ./env-config.js
-touch ./env-config.js
+rm -rf /usr/share/nginx/html/config.js
+touch /usr/share/nginx/html/config.js
 
 # Add assignment 
-echo "window._env_ = {" >> ./env-config.js
+echo "window._env_ = {" >> /usr/share/nginx/html/config.js
 for var in `env`; do
-    echo $var | awk -F'=' '{ print "\"" $1 "\"" ":" "\"" $2 "\"" "," }' >> ./env-config.js
+    echo $var | awk -F'=' '{ print "\"" $1 "\"" ":" "\"" $2 "\"" "," }' >> /usr/share/nginx/html/config.js
 done
-echo "}" >> ./env-config.js
+echo "}" >> /usr/share/nginx/html/config.js
 
-exec "$@"
+nginx -g "daemon off;"
 
