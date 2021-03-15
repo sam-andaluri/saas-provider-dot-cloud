@@ -35,5 +35,25 @@ spec:
             secretKeyRef:
               name: provider
               key: REACT_APP_AUTH0_CLIENT_ID
+        - name: M2M_API_AUTH0_URL
+          valueFrom:
+            secretKeyRef:
+              name: provider
+              key: M2M_API_AUTH0_URL
+        - name: M2M_API_AUTH0_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: provider
+              key: M2M_API_AUTH0_CLIENT_ID
+        - name: M2M_API_AUTHO0_AUDIENCE
+          valueFrom:
+            secretKeyRef:
+              name: provider
+              key: M2M_API_AUTHO0_AUDIENCE
+        - name: M2M_API_AUTH0_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: provider
+              key: M2M_API_AUTH0_CLIENT_SECRET
         ports:
           - containerPort: 80

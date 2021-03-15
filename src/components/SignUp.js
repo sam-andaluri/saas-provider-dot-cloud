@@ -56,6 +56,11 @@ export default function SignUp() {
     const lname = name.split(" ")[1];
     const tier = new URLSearchParams(useLocation().search).get("tier")
 
+    function handleSignup() {
+        console.log("sign up enter")
+
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -133,6 +138,7 @@ export default function SignUp() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={() => { handleSignup() }}
                     >
                         Sign Up
                     </Button>
