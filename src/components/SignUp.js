@@ -13,7 +13,24 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useAuth0} from "@auth0/auth0-react";
-import {useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
+import { configureStore } from '@reduxjs/toolkit'
+
+const store = configureStore({ reducer: tenantReducer })
+
+
+function tenantReducer(state, action) {
+    // Check to see if the reducer cares about this action
+    if (action.type === 'tenant/update') {
+        // If so, make a copy of `state`
+        return {
+            ...state,
+            tenant: action.payload
+        }
+    }
+    // otherwise return the existing state unchanged
+    return state
+}
 
 function Copyright() {
     return (
@@ -52,13 +69,32 @@ export default function SignUp() {
     const classes = useStyles();
     const { user } = useAuth0();
     const { name, email } = user;
-    const fname = name.split(" ")[0];
-    const lname = name.split(" ")[1];
+    const firstName = name.split(" ")[0];
+    const lastName = name.split(" ")[1];
     const tier = new URLSearchParams(useLocation().search).get("tier")
+    store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier}} })
+    const history = useHistory();
+    const { getAccessTokenSilently } = useAuth0();
 
-    function handleSignup() {
-        console.log("sign up enter")
 
+    async function handleSubmit(event) {
+        console.log(name)
+        console.log(email)
+        console.log(tier)
+        event.preventDefault()
+
+        const token = await getAccessTokenSilently();
+
+        let tenant_api_options = { 'method': 'POST',
+            headers: { Authorization : `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({"name": name, "email": email, "tier": tier})
+        }
+
+        let responseData = await fetch("https://tenant-api.saas-provider.cloud/tenant", tenant_api_options)
+        let tenant_resp = await responseData.json();
+        console.log(tenant_resp.tenant_url)
+        store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier, domain: tenant_resp.tenant_url}} })
+        history.replace("/profile")
     }
 
     return (
@@ -71,7 +107,7 @@ export default function SignUp() {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -82,7 +118,7 @@ export default function SignUp() {
                                 fullWidth
                                 id="firstName"
                                 label="First Name"
-                                value={fname}
+                                value={firstName}
                                 disabled={true}
                             />
                         </Grid>
@@ -94,8 +130,7 @@ export default function SignUp() {
                                 id="lastName"
                                 label="Last Name"
                                 name="lastName"
-                                autoComplete="lname"
-                                value = {lname}
+                                value = {lastName}
                                 disabled={true}
                             />
                         </Grid>
@@ -107,7 +142,6 @@ export default function SignUp() {
                                 id="email"
                                 label="Email Address"
                                 name="email"
-                                autoComplete="email"
                                 value = {email}
                                 disabled={true}
                             />
@@ -125,6 +159,19 @@ export default function SignUp() {
                                 disabled={true}
                             />
                         </Grid>
+                        {/*<Grid item xs={12}>*/}
+                        {/*    <TextField*/}
+                        {/*        variant="outlined"*/}
+                        {/*        required*/}
+                        {/*        fullWidth*/}
+                        {/*        name="domain"*/}
+                        {/*        label="Domain"*/}
+                        {/*        type="text"*/}
+                        {/*        value={store.getState().tenant.domain}*/}
+                        {/*        id="domain"*/}
+                        {/*        disabled={true}*/}
+                        {/*    />*/}
+                        {/*</Grid>*/}
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -138,7 +185,6 @@ export default function SignUp() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={() => { handleSignup() }}
                     >
                         Sign Up
                     </Button>

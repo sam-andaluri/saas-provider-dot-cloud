@@ -6,18 +6,19 @@ This is an example SaaS provider application. SaaS Provider UI shows different t
 
 ## CI/CD and GitOps flow
 
+### Install: ArgoCD application is created to sync /kubernetes directory
+
 ### Trigger : When a change is made to repo
 
-1. CodePipeline triggers a CodeBuild to build a docker image of the UI.
-2. Github action triggers and applies kubernetes manifests to the EKS cluster.
+1. CodePipeline triggers a CodeBuild to build a docker image of the UI and sets the image of the deployment to last commit hash.
 
 ### Trigger : When a new tenant signs up
 
-0. All tenants share same deployment and service specs. Based on tenant's tier e.g. free, pro or enterprise, a kustomization is applied on the base specs to set specific resources. 
+0. All tenants share same deployment and service specs. Based on tenant's tier e.g. free, pro or enterprise, a customization is applied on the base specs to set specific resources. 
 1. Front-end makes an API call to an API end point to create a tenant.
-2. API server uses Github API to make a copy of a templated repo as described above.
+2. API server uses Github API to make a copy of a template repo.
 3. API server copies the base deployment and service specs.
 4. API server generates an ArgoCD Application spec.
 5. API server generates a Github action and adds all the above files to repo, commits the change.
 6. Github action starts on push, applies ArgoCD application
-7. ArgoCD takes kustomized tiered specs and syncs them to Cluster.
+7. ArgoCD takes manifests and syncs them to Cluster.

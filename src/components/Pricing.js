@@ -114,12 +114,11 @@ export default function Pricing() {
             <CssBaseline />
             {/* Hero unit */}
             <Container maxWidth="sm" component="main" className={classes.heroContent}>
-                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                    Pricing
+                <Typography component="h2" variant="h2" align="center" color="textPrimary" gutterBottom>
+                    Tiddler Analytics Pricing
                 </Typography>
                 <Typography variant="h5" align="center" color="textSecondary" component="p">
-                    Quickly build an effective pricing table for your potential customers with this layout.
-                    It&apos;s built with default Material-UI components with little customization.
+                    You can run your application on AWS or GCP.
                 </Typography>
             </Container>
             {/* End hero unit */}

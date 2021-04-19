@@ -4,8 +4,9 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+//import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar() {
     const classes = useStyles();
-
+    const history = useHistory();
     return (
         <React.Fragment>
             <CssBaseline />
@@ -63,18 +64,18 @@ export default function NavBar() {
                     <Typography variant="h6" color="inherit" align={"left" }noWrap className={classes.toolbarTitle}>
                         Tiddler Inc.
                     </Typography>
-                    <nav>
-                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                            Features
-                        </Link>
-                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                            Enterprise
-                        </Link>
-                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                            Support
-                        </Link>
-                    </nav>
-                    <Button href="#" color="primary" variant="outlined" className={classes.link}>
+                    {/*<nav>*/}
+                    {/*    <Link variant="button" color="textPrimary" href="#" className={classes.link}>*/}
+                    {/*        Features*/}
+                    {/*    </Link>*/}
+                    {/*    <Link variant="button" color="textPrimary" href="#" className={classes.link}>*/}
+                    {/*        Enterprise*/}
+                    {/*    </Link>*/}
+                    {/*    <Link variant="button" color="textPrimary" href="#" className={classes.link}>*/}
+                    {/*        Support*/}
+                    {/*    </Link>*/}
+                    {/*</nav>*/}
+                    <Button href="#" color="primary" variant="outlined" className={classes.link} onClick={() => history.replace("/profile")}>
                         Login
                     </Button>
                 </Toolbar>
