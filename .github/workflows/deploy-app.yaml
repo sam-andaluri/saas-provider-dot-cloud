@@ -2,8 +2,8 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - master
+    paths:
+      - 'argo-app.yaml'
 
 env:
   AWS_REGION: us-east-2
@@ -24,8 +24,6 @@ jobs:
           cluster_name: $EKS_CLUSTER_NAME
         with:
           args: |
-            kubectl apply -f kubernetes/namespace.yaml
-            kubectl apply -f kubernetes/provider-sealed-secrets.yaml
-            kubectl apply -f kubernetes/deployment.yaml
-            kubectl apply -f kubernetes/service.yaml
+            kubectl apply -f argo-app.yaml -n argocd
+
 

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: saas-provider
+  namespace: saas-provider-frontend
   name: saas-provider-frontend-service
   annotations:
    service.beta.kubernetes.io/aws-load-balancer-type: nlb
