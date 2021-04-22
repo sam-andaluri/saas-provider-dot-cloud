@@ -5,7 +5,12 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY ./package.json /app/
 RUN yarn --silent
 COPY . /app
-RUN touch .env && echo $REACT_APP_AUTH0_DOMAIN > .env && echo $REACT_APP_AUTH0_CLIENT_ID >> .env
+RUN touch .env && echo $REACT_APP_AUTH0_DOMAIN > .env \
+               && echo $REACT_APP_AUTH0_CLIENT_ID >> .env \
+               && echo $REACT_APP_TENANT_API_CLIENT_ID >> .env \
+               && echo $REACT_APP_TENANT_API_CLIENT_SECRET >> .env \
+               && echo $REACT_APP_TENANT_API_AUDIENCE >> .env
+
 RUN yarn build
 
 # stage 2 - build the final image and copy the react build files

@@ -15,9 +15,13 @@ import Container from '@material-ui/core/Container';
 import {useAuth0} from "@auth0/auth0-react";
 import {useHistory, useLocation} from "react-router-dom";
 import { configureStore } from '@reduxjs/toolkit'
+import request from 'request';
+
+const clientId = process.env.REACT_APP_TENANT_API_CLIENT_ID;
+const clientSecret = process.env.REACT_APP_TENANT_API_CLIENT_SECRET;
+const audience = process.env.REACT_APP_TENANT_API_AUDIENCE;
 
 const store = configureStore({ reducer: tenantReducer })
-
 
 function tenantReducer(state, action) {
     // Check to see if the reducer cares about this action
@@ -74,27 +78,43 @@ export default function SignUp() {
     const tier = new URLSearchParams(useLocation().search).get("tier")
     store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier}} })
     const history = useHistory();
-    const { getAccessTokenSilently } = useAuth0();
-
 
     async function handleSubmit(event) {
         console.log(name)
         console.log(email)
         console.log(tier)
         event.preventDefault()
-
-        const token = await getAccessTokenSilently();
-
-        let tenant_api_options = { 'method': 'POST',
-            headers: { Authorization : `Bearer ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({"name": name, "email": email, "tier": tier})
+        var body = {
+            "client_id":clientId,
+            "client_secret":clientSecret,
+            "audience":audience,
+            "grant_type":"client_credentials"
         }
+        var options = { method: 'POST',
+            url: 'https://saas-provider.us.auth0.com/oauth/token',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body) };
 
-        let responseData = await fetch("https://tenant-api.saas-provider.cloud/tenant", tenant_api_options)
-        let tenant_resp = await responseData.json();
-        console.log(tenant_resp.tenant_url)
-        store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier, domain: tenant_resp.tenant_url}} })
-        history.replace("/profile")
+        request(options, async function (error, response, body) {
+            if (error) throw new Error(error);
+            console.log(body);
+            var token = JSON.parse(body)["access_token"]
+            console.log("Token = " + token)
+            let tenant_api_options = { 'method': 'POST',
+                headers: { Authorization : 'Bearer ' + token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({"name": name, "email": email, "tier": tier})
+            }
+
+            let responseData = fetch("https://tenant-api.saas-provider.cloud/tenant", tenant_api_options)
+            //let responseData = await fetch("http://localhost:8000/tenant", tenant_api_options)
+            let tenant_resp = await responseData.json();
+            console.log(tenant_resp.tenant_url)
+            store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier, domain: tenant_resp.tenant_url}} })
+            history.replace("/profile?url="+tenant_resp.tenant_url)
+        });
+
+
+
     }
 
     return (

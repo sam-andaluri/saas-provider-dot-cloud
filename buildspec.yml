@@ -2,8 +2,11 @@ version: 0.2
 
 env:
   secrets-manager:
-    REACT_APP_AUTH0_DOMAIN: "react-auth0-dev:REACT_APP_AUTH0_DOMAIN"
-    REACT_APP_AUTH0_CLIENT_ID: "react-auth0-dev:REACT_APP_AUTH0_CLIENT_ID"
+    REACT_APP_AUTH0_DOMAIN: "react-auth0-provider-prod:REACT_APP_AUTH0_DOMAIN"
+    REACT_APP_AUTH0_CLIENT_ID: "react-auth0-provider-prodd:REACT_APP_AUTH0_CLIENT_ID"
+    REACT_APP_TENANT_API_CLIENT_ID: "react-auth0-provider-prod:REACT_APP_TENANT_API_CLIENT_ID"
+    REACT_APP_TENANT_API_CLIENT_SECRET: "react-auth0-provider-prod:REACT_APP_TENANT_API_CLIENT_SECRET"
+    REACT_APP_TENANT_API_AUDIENCE: "react-auth0-provider-prod:REACT_APP_TENANT_API_AUDIENCE"
 phases:
   install:
     commands:
