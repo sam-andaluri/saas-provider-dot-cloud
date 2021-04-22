@@ -105,12 +105,17 @@ export default function SignUp() {
                 body: JSON.stringify({"name": name, "email": email, "tier": tier})
             }
 
-            let responseData = fetch("https://tenant-api.saas-provider.cloud/tenant", tenant_api_options)
+            let responseData = await fetch("https://tenant-api.saas-provider.cloud/tenant", tenant_api_options)
             //let responseData = await fetch("http://localhost:8000/tenant", tenant_api_options)
             let tenant_resp = await responseData.json();
+            let tenant_url = tenant_resp.tenant_url
             console.log(tenant_resp.tenant_url)
             store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier, domain: tenant_resp.tenant_url}} })
-            history.replace("/profile?url="+tenant_resp.tenant_url)
+            //history.replace("/profile?url="+tenant_resp.tenant_url)
+            history.push({
+                pathname: '/profile',
+                search: `?url=${tenant_url}`,
+            })
         });
 
 
