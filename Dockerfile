@@ -5,11 +5,11 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY ./package.json /app/
 RUN yarn --silent
 COPY . /app
-RUN touch .env && echo $REACT_APP_AUTH0_DOMAIN > .env \
-               && echo $REACT_APP_AUTH0_CLIENT_ID >> .env \
-               && echo $REACT_APP_TENANT_API_CLIENT_ID >> .env \
-               && echo $REACT_APP_TENANT_API_CLIENT_SECRET >> .env \
-               && echo $REACT_APP_TENANT_API_AUDIENCE >> .env
+RUN touch .env && echo $REACT_APP_AUTH0_DOMAIN > /app/.env \
+               && echo $REACT_APP_AUTH0_CLIENT_ID >> /app/.env \
+               && echo $REACT_APP_TENANT_API_CLIENT_ID >> /app/.env \
+               && echo $REACT_APP_TENANT_API_CLIENT_SECRET >> /app/.env \
+               && echo $REACT_APP_TENANT_API_AUDIENCE >> /app/.env
 
 RUN yarn build
 
