@@ -28,7 +28,7 @@ phases:
       - aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
   build:
     commands:
-      - Export REACT APP vars
+      - echo Export REACT APP vars
       - echo $REACT_APP_AUTH0_DOMAIN > .env
       - echo $REACT_APP_AUTH0_CLIENT_ID >> .env
       - echo $REACT_APP_TENANT_API_CLIENT_ID >> .env
