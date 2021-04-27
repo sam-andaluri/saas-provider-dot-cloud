@@ -29,11 +29,11 @@ phases:
   build:
     commands:
       - echo Export REACT APP vars
-      - echo $REACT_APP_AUTH0_DOMAIN > .env.production
-      - echo $REACT_APP_AUTH0_CLIENT_ID >> .env.production
-      - echo $REACT_APP_TENANT_API_CLIENT_ID >> .env.production
-      - echo $REACT_APP_TENANT_API_CLIENT_SECRET >> .env.production
-      - echo $REACT_APP_TENANT_API_AUDIENCE >> .env.production
+      - echo "REACT_APP_AUTH0_DOMAIN=$REACT_APP_AUTH0_DOMAIN" > .env.production
+      - echo "REACT_APP_AUTH0_CLIENT_ID=$REACT_APP_AUTH0_CLIENT_ID" >> .env.production
+      - echo "REACT_APP_TENANT_API_CLIENT_ID=$REACT_APP_TENANT_API_CLIENT_ID" >> .env.production
+      - echo "REACT_APP_TENANT_API_CLIENT_SECRET=$REACT_APP_TENANT_API_CLIENT_SECRET" >> .env.production
+      - echo "REACT_APP_TENANT_API_AUDIENCE=$REACT_APP_TENANT_API_AUDIENCE" >> .env.production
       - cat .env.production
       - echo Build started on `date`
       - echo Building the Docker image...
