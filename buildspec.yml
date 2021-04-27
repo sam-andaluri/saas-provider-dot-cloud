@@ -28,6 +28,8 @@ phases:
       - aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
   build:
     commands:
+      - echo $REACT_APP_AUTH0_DOMAIN
+      - echo $REACT_APP_TENANT_API_CLIENT_ID
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$TAG .
