@@ -5,7 +5,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY ./package.json /app/
 RUN yarn --silent
 COPY . /app
-COPY .env /app
+COPY ./.env /app/
 RUN yarn build
 
 # stage 2 - build the final image and copy the react build files
