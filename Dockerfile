@@ -10,7 +10,11 @@ RUN touch /app/.env.production && echo $REACT_APP_AUTH0_DOMAIN > /app/.env.produ
                && echo $REACT_APP_TENANT_API_CLIENT_ID >> /app/.env.production \
                && echo $REACT_APP_TENANT_API_CLIENT_SECRET >> /app/.env.production \
                && echo $REACT_APP_TENANT_API_AUDIENCE >> /app/.env.production
-
+RUN touch .env.production && echo $REACT_APP_AUTH0_DOMAIN > .env.production \
+               && echo $REACT_APP_AUTH0_CLIENT_ID >> .env.production \
+               && echo $REACT_APP_TENANT_API_CLIENT_ID >> .env.production \
+               && echo $REACT_APP_TENANT_API_CLIENT_SECRET >> .env.production \
+               && echo $REACT_APP_TENANT_API_AUDIENCE >> .env.production
 RUN yarn build
 
 # stage 2 - build the final image and copy the react build files
