@@ -17,9 +17,12 @@ import {useHistory, useLocation} from "react-router-dom";
 import { configureStore } from '@reduxjs/toolkit'
 import request from 'request';
 
-const clientId = process.env.REACT_APP_TENANT_API_CLIENT_ID;
-const clientSecret = process.env.REACT_APP_TENANT_API_CLIENT_SECRET;
-const audience = process.env.REACT_APP_TENANT_API_AUDIENCE;
+// const clientId = process.env.REACT_APP_TENANT_API_CLIENT_ID;
+// const clientSecret = process.env.REACT_APP_TENANT_API_CLIENT_SECRET;
+// const audience = process.env.REACT_APP_TENANT_API_AUDIENCE;
+const clientId = window._env_.REACT_APP_TENANT_API_CLIENT_ID;
+const clientSecret = window._env_.REACT_APP_TENANT_API_CLIENT_SECRET;
+const audience = window._env_.REACT_APP_TENANT_API_AUDIENCE;
 
 const store = configureStore({ reducer: tenantReducer })
 
