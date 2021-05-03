@@ -5,11 +5,8 @@ steps:
     secretEnv: ['USERNAME', 'PASSWORD']
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: ['-c', 'docker build --build-arg REACT_APP_AUTH0_DOMAIN=$$REACT_APP_AUTH0_DOMAIN --build-arg REACT_APP_AUTH0_CLIENT_ID=$$REACT_APP_AUTH0_CLIENT_ID --build-arg REACT_APP_TENANT_API_CLIENT_ID=$$REACT_APP_TENANT_API_CLIENT_ID --build-arg REACT_APP_TENANT_API_CLIENT_SECRET=$$REACT_APP_TENANT_API_CLIENT_SECRET --build-arg REACT_APP_TENANT_API_AUDIENCE=$$REACT_APP_TENANT_API_AUDIENCE -t $REPO_NAME:$COMMIT_SHA .']
+    args: ['-c', 'docker build --build-arg REACT_APP_AUTH0_DOMAIN=$$REACT_APP_AUTH0_DOMAIN --build-arg REACT_APP_AUTH0_CLIENT_ID=$$REACT_APP_AUTH0_CLIENT_ID --build-arg REACT_APP_TENANT_API_CLIENT_ID=$$REACT_APP_TENANT_API_CLIENT_ID --build-arg REACT_APP_TENANT_API_CLIENT_SECRET=$$REACT_APP_TENANT_API_CLIENT_SECRET --build-arg REACT_APP_TENANT_API_AUDIENCE=$$REACT_APP_TENANT_API_AUDIENCE -t $REPO_NAME:latest .']
     secretEnv: ['REACT_APP_AUTH0_CLIENT_ID','REACT_APP_AUTH0_DOMAIN','REACT_APP_TENANT_API_AUDIENCE','REACT_APP_TENANT_API_CLIENT_ID','REACT_APP_TENANT_API_CLIENT_SECRET']
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: ['-c', 'docker push $REPO_NAME:$COMMIT_SHA']
 availableSecrets:
   secretManager:
     - versionName: projects/$PROJECT_NUMBER/secrets/USERNAME/versions/1
