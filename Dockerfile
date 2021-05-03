@@ -14,10 +14,10 @@ RUN yarn --silent
 COPY . /app
 
 RUN echo "REACT_APP_AUTH0_DOMAIN=$REACT_APP_AUTH0_DOMAIN" > /app/.env.production && \
-RUN echo "REACT_APP_AUTH0_CLIENT_ID=$REACT_APP_AUTH0_CLIENT_ID" >> /app/.env.production && \
-RUN echo "REACT_APP_TENANT_API_CLIENT_ID=$REACT_APP_TENANT_API_CLIENT_ID" >> /app/.env.production && \
-RUN echo "REACT_APP_TENANT_API_CLIENT_SECRET=$REACT_APP_TENANT_API_CLIENT_SECRET" >> /app/.env.production && \
-RUN echo "REACT_APP_TENANT_API_AUDIENCE=$REACT_APP_TENANT_API_AUDIENCE" >> /app/.env.production
+    echo "REACT_APP_AUTH0_CLIENT_ID=$REACT_APP_AUTH0_CLIENT_ID" >> /app/.env.production && \
+    echo "REACT_APP_TENANT_API_CLIENT_ID=$REACT_APP_TENANT_API_CLIENT_ID" >> /app/.env.production && \
+    echo "REACT_APP_TENANT_API_CLIENT_SECRET=$REACT_APP_TENANT_API_CLIENT_SECRET" >> /app/.env.production && \
+    echo "REACT_APP_TENANT_API_AUDIENCE=$REACT_APP_TENANT_API_AUDIENCE" >> /app/.env.production
 
 RUN yarn build
 
