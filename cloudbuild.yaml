@@ -12,17 +12,17 @@ steps:
     args: ['-c', 'docker push $REPO_NAME:$TAG_NAME']
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_NUMBER/secrets/USERNAME/1
+    - versionName: projects/$PROJECT_NUMBER/secrets/USERNAME
       env: 'USERNAME'
-    - versionName: projects/$PROJECT_NUMBER/secrets/PASSWORD/1
+    - versionName: projects/$PROJECT_NUMBER/secrets/PASSWORD
       env: 'PASSWORD'
-    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_AUTH0_CLIENT_ID/1
+    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_AUTH0_CLIENT_ID
       env: 'REACT_APP_AUTH0_CLIENT_ID'
-    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_AUTH0_DOMAIN/1
+    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_AUTH0_DOMAIN
       env: 'REACT_APP_AUTH0_DOMAIN'
-    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_TENANT_API_AUDIENCE/1
+    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_TENANT_API_AUDIENCE
       env: 'REACT_APP_TENANT_API_AUDIENCE'
-    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_TENANT_API_CLIENT_ID/1
+    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_TENANT_API_CLIENT_ID
       env: 'REACT_APP_TENANT_API_CLIENT_ID'
-    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_TENANT_API_CLIENT_SECRET/1
+    - versionName: projects/$PROJECT_NUMBER/secrets/REACT_APP_TENANT_API_CLIENT_SECRET
       env: 'REACT_APP_TENANT_API_CLIENT_SECRET'
