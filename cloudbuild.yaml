@@ -10,7 +10,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
     args: ['-c', 'docker push $REPO_NAME:$TAG_NAME']
-    secretEnv: ['USERNAME']
   availableSecrets:
     secretManager:
       - versionName: projects/$PROJECT_NUMBER/secrets/USERNAME/1
