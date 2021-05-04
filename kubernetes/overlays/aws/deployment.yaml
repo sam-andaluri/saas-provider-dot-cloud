@@ -6,8 +6,6 @@ metadata:
 spec:
   template:
     spec:
-      $setElementOrder/containers:
-      - name: saas-provider-frontend
       containers:
       - image: 427398298435.dkr.ecr.us-east-2.amazonaws.com/saas-provider-dot-cloud:latest
         name: saas-provider-frontend

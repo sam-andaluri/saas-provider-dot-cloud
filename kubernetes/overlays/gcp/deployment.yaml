@@ -6,8 +6,6 @@ metadata:
 spec:
   template:
     spec:
-      $setElementOrder/containers:
-      - name: saas-provider-frontend
       containers:
       - image: gcr.io/sam-playground-290106/saas-provider-dot-cloud:latest
         name: saas-provider-frontend
