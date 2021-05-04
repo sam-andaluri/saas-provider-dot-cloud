@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: saas-provider-frontend
+  name: saas-provider-frontend-service
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: 80
+      protocol: TCP
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: saas-provider-frontend

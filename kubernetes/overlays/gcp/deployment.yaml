@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saas-provider-frontend-deployment
+  namespace: saas-provider-frontend
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: saas-provider-frontend
+      containers:
+      - image: gcr.io/sam-playground-290106/saas-provider-dot-cloud:latest
+        name: saas-provider-frontend
