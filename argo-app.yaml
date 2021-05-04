@@ -12,7 +12,7 @@ spec:
     repoURL: 'https://github.com/sam-andaluri/saas-provider-dot-cloud'
     targetRevision: HEAD
     directory:
-      recurse: true
+      recurse: false
   project: default
   syncPolicy:
     automated:
