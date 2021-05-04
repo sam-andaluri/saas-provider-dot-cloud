@@ -5,7 +5,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: saas-provider
+    namespace: saas-provider-frontend
     server: 'https://kubernetes.default.svc'
   source:
     path: kubernetes/overlays/aws
