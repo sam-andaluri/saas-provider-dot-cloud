@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: saas-provider-dot-xyz-ingress
+  namespace: saas-provider-frontend
+  annotations:
+    kubernetes.io/ingress.class: gce
+    networking.gke.io/managed-certificates: saas-provider-dot-xyz-cert
+    kubernetes.io/ingress.global-static-ip-name: saas-provider-dot-xyz
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  rules:
+    - host: saas-provider.xyz
+      http:
+        paths:
+          - backend:
+              serviceName: saas-provider-frontend-service
+              servicePort: 80
+            path: /*

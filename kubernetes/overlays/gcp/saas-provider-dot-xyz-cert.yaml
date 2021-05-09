@@ -1,0 +1,9 @@
+apiVersion: networking.gke.io/v1beta2
+kind: ManagedCertificate
+metadata:
+  name: saas-provider-dot-xyz-cert
+  namespace: saas-provider-frontend
+spec:
+  domains:
+    - saas-provider.xyz
+    - tenant-api.saas-provider.xyz
