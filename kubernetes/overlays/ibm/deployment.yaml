@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saas-provider-frontend-deployment
+  namespace: saas-provider-frontend
+spec:
+  template:
+    spec:
+      containers:
+      - image: private.us.icr.io/saas-provider/build-saas-provider
+        name: saas-provider-frontend
