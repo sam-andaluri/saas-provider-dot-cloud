@@ -64,17 +64,6 @@ export default function NavBar() {
                     <Typography variant="h6" color="inherit" align={"left" }noWrap className={classes.toolbarTitle}>
                         Tiddler Inc.
                     </Typography>
-                    {/*<nav>*/}
-                    {/*    <Link variant="button" color="textPrimary" href="#" className={classes.link}>*/}
-                    {/*        Features*/}
-                    {/*    </Link>*/}
-                    {/*    <Link variant="button" color="textPrimary" href="#" className={classes.link}>*/}
-                    {/*        Enterprise*/}
-                    {/*    </Link>*/}
-                    {/*    <Link variant="button" color="textPrimary" href="#" className={classes.link}>*/}
-                    {/*        Support*/}
-                    {/*    </Link>*/}
-                    {/*</nav>*/}
                     <Button href="#" color="primary" variant="outlined" className={classes.link} onClick={() => history.replace("/profile")}>
                         Login
                     </Button>

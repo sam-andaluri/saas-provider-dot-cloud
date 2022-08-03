@@ -12,29 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useAuth0} from "@auth0/auth0-react";
-import {useHistory, useLocation} from "react-router-dom";
-import { configureStore } from '@reduxjs/toolkit'
-import request from 'request';
-
-const clientId = process.env.REACT_APP_TENANT_API_CLIENT_ID;
-const clientSecret = process.env.REACT_APP_TENANT_API_CLIENT_SECRET;
-const audience = process.env.REACT_APP_TENANT_API_AUDIENCE;
-
-const store = configureStore({ reducer: tenantReducer })
-
-function tenantReducer(state, action) {
-    // Check to see if the reducer cares about this action
-    if (action.type === 'tenant/update') {
-        // If so, make a copy of `state`
-        return {
-            ...state,
-            tenant: action.payload
-        }
-    }
-    // otherwise return the existing state unchanged
-    return state
-}
+import {useLocation} from "react-router-dom";
+import {useState} from 'react';
+import Countly from 'countly-sdk-web';
 
 function Copyright() {
     return (
@@ -71,55 +51,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
-    const { user } = useAuth0();
-    const { name, email } = user;
-    const firstName = name.split(" ")[0];
-    const lastName = name.split(" ")[1];
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName]= useState('');
+    const [email, setEmail] = useState('');
     const tier = new URLSearchParams(useLocation().search).get("tier")
-    store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier}} })
-    const history = useHistory();
-
+    
     async function handleSubmit(event) {
-        console.log(name)
-        console.log(email)
-        console.log(tier)
-        event.preventDefault()
-        var body = {
-            "client_id":clientId,
-            "client_secret":clientSecret,
-            "audience":audience,
-            "grant_type":"client_credentials"
-        }
-        var options = { method: 'POST',
-            url: 'https://saas-provider.us.auth0.com/oauth/token',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(body) };
+        console.log(firstName);
+        console.log(lastName);
+        console.log(email);
+        console.log(tier);
+        event.preventDefault();
 
-        request(options, async function (error, response, body) {
-            if (error) throw new Error(error);
-            console.log(body);
-            var token = JSON.parse(body)["access_token"]
-            console.log("Token = " + token)
-            let tenant_api_options = { 'method': 'POST',
-                headers: { Authorization : 'Bearer ' + token, 'Content-Type': 'application/json' },
-                body: JSON.stringify({"name": name, "email": email, "tier": tier})
+        Countly.q.push(['add_event',{
+            key:"subscription", 
+            segmentation: {
+              "id": tier
             }
+          }]);
 
-            let responseData = await fetch("https://tenant-api.saas-provider.cloud/tenant", tenant_api_options)
-            //let responseData = await fetch("http://localhost:8000/tenant", tenant_api_options)
-            let tenant_resp = await responseData.json();
-            let tenant_url = tenant_resp.tenant_url
-            console.log(tenant_resp.tenant_url)
-            store.dispatch({ type: 'tenant/update', payload: {tenant: {firstName: firstName, lastName: lastName, tier: tier, domain: tenant_resp.tenant_url}} })
-            //history.replace("/profile?url="+tenant_resp.tenant_url)
-            history.push({
-                pathname: '/profile',
-                search: `?url=${tenant_url}`,
-            })
-        });
+        let tenant_api_options = { 'method': 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({"name": firstName + ',' + lastName, "email": email, "tier": tier})
+        }
 
-
-
+        let responseData = await fetch("http://localhost:8080/tenant", tenant_api_options)
+        let tenant_resp = await responseData.json();
+        console.log(tenant_resp);
     }
 
     return (
@@ -143,8 +101,9 @@ export default function SignUp() {
                                 fullWidth
                                 id="firstName"
                                 label="First Name"
+                                onChange={event =>  setFirstName(event.target.value)}
                                 value={firstName}
-                                disabled={true}
+                                //disabled={true}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -155,8 +114,9 @@ export default function SignUp() {
                                 id="lastName"
                                 label="Last Name"
                                 name="lastName"
+                                onChange={event =>  setLastName(event.target.value)}
                                 value = {lastName}
-                                disabled={true}
+                                //disabled={true}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -167,8 +127,9 @@ export default function SignUp() {
                                 id="email"
                                 label="Email Address"
                                 name="email"
+                                onChange={event =>  setEmail(event.target.value)}
                                 value = {email}
-                                disabled={true}
+                                //disabled={true}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -181,22 +142,9 @@ export default function SignUp() {
                                 type="text"
                                 value={tier}
                                 id="tier"
-                                disabled={true}
+                               disabled={true}
                             />
                         </Grid>
-                        {/*<Grid item xs={12}>*/}
-                        {/*    <TextField*/}
-                        {/*        variant="outlined"*/}
-                        {/*        required*/}
-                        {/*        fullWidth*/}
-                        {/*        name="domain"*/}
-                        {/*        label="Domain"*/}
-                        {/*        type="text"*/}
-                        {/*        value={store.getState().tenant.domain}*/}
-                        {/*        id="domain"*/}
-                        {/*        disabled={true}*/}
-                        {/*    />*/}
-                        {/*</Grid>*/}
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}

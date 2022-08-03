@@ -12,7 +12,6 @@ import StarIcon from '@material-ui/icons/StarBorder';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-//import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -96,13 +95,9 @@ const tiers = [
 
 export default function Pricing() {
     const classes = useStyles();
-    //const { loginWithRedirect } = useAuth0();
 
     let history = useHistory();
     function handleSignup(tier) {
-        // loginWithRedirect({
-        //     screen_hint: "signup",
-        // });
         history.push({
             pathname: '/signup',
             search: `?tier=${tier}`,
