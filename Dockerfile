@@ -22,7 +22,7 @@ RUN echo "REACT_APP_AUTH0_DOMAIN=$REACT_APP_AUTH0_DOMAIN" > /app/.env.production
 RUN yarn build
 
 # stage 2 - build the final image and copy the react build files
-FROM nginx:1-alpine
+FROM nginx:1.20-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
