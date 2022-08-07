@@ -7,5 +7,5 @@ spec:
   template:
     spec:
       containers:
-      - image: private.us.icr.io/saas-provider/build-saas-provider
+      - image: sandaluri/saas-provider-dot-cloud:latest
         name: saas-provider-frontend
