@@ -23,6 +23,7 @@ dev.env
 .env.production
 .env.development
 .env
+.vscode/
 
 npm-debug.log*
 yarn-debug.log*
